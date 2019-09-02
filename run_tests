@@ -4,6 +4,11 @@ run_tests=''
 running_all=false
 export TEST_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+if [[ ! -e "${TEST_DIR}/fakeproc" ]]; then
+    echo "Extracting test proc file system..."
+    tar -C "${TEST_DIR}" -xf "${TEST_DIR}/fakeproc.tar.gz"
+fi
+
 if [[ -z ${@} ]]; then
     running_all=true
     run_tests=$(ls -1 ./tests/??-*-*.sh);
