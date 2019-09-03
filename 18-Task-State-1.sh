@@ -2,10 +2,10 @@ source "${TEST_DIR}/funcs.bash"
 
 test_start "Task States"
 
-matches=$(./inspector -p "${TEST_DIR}/fakeproc" -l \
+matches=$(./inspector -p "${TEST_DIR}/fakeproc" -t \
     | grep 'tracing stop' | wc -l)
 
-list=$(./inspector -p "${TEST_DIR}/fakeproc" -l)
+list=$(./inspector -p "${TEST_DIR}/fakeproc" -t)
 
 # Now check for each process state (running, sleeping, disk sleep, zombie, dead)
 [ ${matches} -eq 1 ] \
