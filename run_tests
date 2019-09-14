@@ -20,6 +20,11 @@ if [[ -z "${run_tests}" ]]; then
     exit 1
 fi
 
+if [[ ! -e "./tests/virtualproc/virtualproc.so" ]]; then
+    echo "Building virtualproc"
+    (cd ./tests/virtualproc; make)
+fi
+
 points=0
 total_points=0
 echo "Running Tests:"
@@ -32,6 +37,10 @@ for test in ${run_tests}; do
     test_name="${test_name:3}"
     test_name="${test_name//-/ }"
     printf " * %s %-20s [%s pts]" "${test_num}" "${test_name:0:20}" "${test_pts}"
+    if [[ ! -x "${test}" ]]; then
+        echo "  [NoExec]"
+        continue
+    fi
     ${test}
     if [[ $? -ne 0 ]]; then
         echo "  [ FAIL ]"
