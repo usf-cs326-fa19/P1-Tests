@@ -3,7 +3,7 @@ source "${TEST_DIR}/funcs.bash"
 test_start "CPU Model"
 
 ./inspector -p "${TEST_DIR}/fakeproc" -r \
-    | grep -i 'CPU Model:.*AMD EPYC 7281 16-Core Processor'
+    | grep -i 'CPU[[:space:]]*Model:.*AMD EPYC 7281 16-Core Processor'
 model_correct=${?}
 
 actual_model=$(./inspector -r | grep -i 'CPU Model:' | sed 's/.*:\s*//')

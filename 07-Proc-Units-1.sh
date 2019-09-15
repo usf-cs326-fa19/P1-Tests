@@ -2,13 +2,15 @@ source "${TEST_DIR}/funcs.bash"
 
 test_start "Processing Units"
 
+expected_units="Processing Units: 64"
 reported_units=$(./inspector -p "${TEST_DIR}/fakeproc" -r \
-    | grep -i 'Processing Units:' | awk '{print $3}')
-expected_units=64
+    | grep -i 'Processing.*:')
+compare --ignore-all-space \
+    <(echo "${expected_units}") <(echo "${reported_units}") || test_end 1
 
-actual_units=$(./inspector -r | grep -i 'Processing Units:' | awk '{print $3}')
-expected_actual_units=$(grep '^processor' /proc/cpuinfo | wc -l)
+expected_units="Processing Units: $(grep '^processor' /proc/cpuinfo | wc -l)"
+reported_units=$(./inspector -r | grep -i 'Processing.*:')
+compare --ignore-all-space \
+    <(echo "${expected_units}") <(echo "${reported_units}") || test_end 1
 
-[ ${reported_units} -eq ${expected_units} ] \
-    && [ ${actual_units} -eq ${expected_actual_units} ]
 test_end
