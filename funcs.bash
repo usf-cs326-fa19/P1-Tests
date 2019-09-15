@@ -78,6 +78,12 @@ compare() {
     sdiff --expand-tabs --width="${term_sz}" ${@}
     local result=${?}
     draw_sep '^'
+    echo -n "  --> "
+    if [[ ${result} -eq 0 ]]; then
+        echo "OK"
+    else
+        echo "FAIL"
+    fi
     return ${result}
 }
 
