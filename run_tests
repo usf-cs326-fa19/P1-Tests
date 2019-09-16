@@ -20,6 +20,11 @@ if [[ -z "${run_tests}" ]]; then
     exit 1
 fi
 
+if [[ ! -e "${TEST_DIR}/fakeproc" ]]; then
+    echo "Extracting test proc file system..."
+    tar -C "${TEST_DIR}" -xf "${TEST_DIR}/fakeproc.tar.gz"
+fi
+
 if [[ ! -e "./tests/virtualproc/virtualproc.so" ]]; then
     echo "Building virtualproc"
     (cd ./tests/virtualproc; make)
