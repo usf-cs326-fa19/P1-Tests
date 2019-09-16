@@ -9,7 +9,7 @@ if ! ( which doxygen &> /dev/null ); then
     test_end 1
 fi
 
-doxygen "${TEST_DIR}/../Doxyfile" 2>&1 \
+doxygen "${TEST_DIR}/Doxyfile" 2>&1 \
     | grep -v '(variable)' \
     | grep -v '(macro definition)' \
     | grep 'is not documented' \
