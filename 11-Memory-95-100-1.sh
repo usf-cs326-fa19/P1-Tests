@@ -8,14 +8,14 @@ test_start "Memory: 94.9%, 100% Usage" \
 
 cp "${TEST_DIR}/mem/95" "${TEST_DIR}/fakeproc/meminfo"
 reported_usage1=$(./inspector -p "${TEST_DIR}/fakeproc" -r \
-    | grep -i 'Memory[[:space:]]*Usage:')
+    | grep -i 'Memory[[:space:]]*Usage')
 cp "${TEST_DIR}/mem/original" "${TEST_DIR}/fakeproc/meminfo"
 compare --ignore-all-space \
     <(echo "${expected_usage1}") <(echo "${reported_usage1}") || test_end 1
 
 cp "${TEST_DIR}/mem/100" "${TEST_DIR}/fakeproc/meminfo"
 reported_usage2=$(./inspector -p "${TEST_DIR}/fakeproc" -r \
-    | grep -i 'Memory[[:space:]]*Usage:')
+    | grep -i 'Memory[[:space:]]*Usage')
 cp "${TEST_DIR}/mem/original" "${TEST_DIR}/fakeproc/meminfo"
 compare --ignore-all-space \
     <(echo "${expected_usage2}") <(echo "${reported_usage2}") || test_end 1

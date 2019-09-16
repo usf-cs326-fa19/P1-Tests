@@ -2,13 +2,10 @@ source "${TEST_DIR}/funcs.bash"
 
 test_start "Load Average"
 
+expected_load="Load Average (1/5/15 min): 1.87 1.27 1.07"
 reported_load=$(./inspector -p "${TEST_DIR}/fakeproc" -r \
-    | grep -i 'Load Average' | awk '{print $(NF - 2), $(NF - 1), $(NF)}')
-expected_load="1.87 1.27 1.07"
+    | grep -i 'Load[[:space:]]*Average')
+compare --ignore-all-space \
+    <(echo "${expected_load}") <(echo "${reported_load}") || test_end 1
 
-#actual_load=$(./inspector -r | grep -i 'Load Average' \
-#    | awk '{print $(NF - 2), $(NF - 1), $(NF)}')
-#expected_actual_load=$(awk '{ print $1, $2, $3 }' /proc/loadavg)
-
-[ "${reported_load}" = "${expected_load}" ]
 test_end

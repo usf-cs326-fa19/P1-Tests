@@ -1,6 +1,7 @@
 source "${TEST_DIR}/funcs.bash"
 
-test_start "Task States"
+test_start "Task States" \
+    "Checks for the various task states in the output"
 
 matches=$(./inspector -p "${TEST_DIR}/fakeproc" -t \
     | grep 'tracing stop' | wc -l)

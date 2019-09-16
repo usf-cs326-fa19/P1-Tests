@@ -1,9 +1,12 @@
 source "${TEST_DIR}/funcs.bash"
 
+expected_tasks="Tasks running: 1487"
+
 test_start "Task Count"
 
-tasks=$(./inspector -p "${TEST_DIR}/fakeproc" -t | grep -i 'tasks' \
-    | awk -F': ' '{ print $2 }')
+reported_tasks=$(./inspector -p "${TEST_DIR}/fakeproc" -t \
+    | grep -i 'Tasks[[:space:]]*running')
+compare --ignore-all-space \
+    <(echo "${expected_tasks}") <(echo "${reported_tasks}") || test_end 1
 
-[ "${tasks}" = "1487" ]
 test_end
