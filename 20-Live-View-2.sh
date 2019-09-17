@@ -2,9 +2,9 @@ source "${TEST_DIR}/funcs.bash"
 
 expected_loads=$(cat <<EOM
 Load Average (1/5/15 min): 0.99 0.99 0.99
-Load Average (1/5/15 min): 1.0 1.0 1.0
-Load Average (1/5/15 min): 78.1 40.40 40.40
-Load Average (1/5/15 min): 99.9 99.9 99.9
+Load Average (1/5/15 min): 1.00 1.00 1.11
+Load Average (1/5/15 min): 78.10 40.40 40.40
+Load Average (1/5/15 min): 99.99 99.99 99.99
 EOM
 )
 
