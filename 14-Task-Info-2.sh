@@ -1,6 +1,6 @@
 source "${TEST_DIR}/funcs.bash"
 
-expected_line="88888 |       zombie | really_really_long_named_ | mmalensek |  9256"
+expected_line="88888 |       zombie | really_really_long_named_ | $(whoami) |  9256"
 
 test_start "Correct Process Info, Name Truncation, and Sub-Task Count (9256)"
 
