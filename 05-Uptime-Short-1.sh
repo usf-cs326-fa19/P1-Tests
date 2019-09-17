@@ -9,7 +9,7 @@ expected_uptime="Uptime: 2 minutes, 15 seconds"
 reported_uptime=$(./inspector -p "${TEST_DIR}/fakeproc" -s | grep -i 'Uptime')
 echo "${prev_uptime}" > "${TEST_DIR}/fakeproc/uptime"
 
-compare --ignore-all-space \
+compare --ignore-all-space --ignore-case \
     <(echo "${expected_uptime}") <(echo "${reported_uptime}") || test_end 1
 
 test_end

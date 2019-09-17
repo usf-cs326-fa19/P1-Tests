@@ -7,7 +7,7 @@ test_start "CPU Usage" \
 
 reported_cpu=$(./inspector -p "${TEST_DIR}/fakeproc" -r \
     | grep -i 'CPU[[:space:]]Usage')
-compare --ignore-all-space \
+compare --ignore-all-space --ignore-case \
     <(echo "${expected_cpu}") <(echo "${reported_cpu}") || test_end 1
 
 test_end

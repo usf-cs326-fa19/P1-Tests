@@ -10,14 +10,14 @@ cp "${TEST_DIR}/mem/zero" "${TEST_DIR}/fakeproc/meminfo"
 reported_mem=$(./inspector -p "${TEST_DIR}/fakeproc" -r \
     | grep -i 'Memory[[:space:]]*Usage')
 cp "${TEST_DIR}/mem/original" "${TEST_DIR}/fakeproc/meminfo"
-compare --ignore-all-space \
+compare --ignore-all-space --ignore-case \
     <(echo "${expected_mem1}") <(echo "${reported_mem}") || test_end 1
 
 cp "${TEST_DIR}/mem/50" "${TEST_DIR}/fakeproc/meminfo"
 reported_mem=$(./inspector -p "${TEST_DIR}/fakeproc" -r \
     | grep -i 'Memory[[:space:]]*Usage')
 cp "${TEST_DIR}/mem/original" "${TEST_DIR}/fakeproc/meminfo"
-compare --ignore-all-space \
+compare --ignore-all-space --ignore-case \
     <(echo "${expected_mem2}") <(echo "${reported_mem}") || test_end 1
 
 test_end

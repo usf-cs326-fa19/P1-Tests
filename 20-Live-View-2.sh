@@ -41,15 +41,15 @@ LD_PRELOAD="${TEST_DIR}/virtualproc/virtualproc.so" \
 
 reported_loads=$(echo "${output}" | \
     grep -io 'Load[[:space:]]*Average[[:space:]]*(1/5/15 min):[[:space:]]*\([0-9.]*\)[[:space:]]*\([0-9.]*\)[[:space:]]*\([0-9.]*\)' | sort | uniq)
-compare --ignore-all-space \
+compare --ignore-all-space --ignore-case \
     <(echo "${expected_loads}") <(echo "${reported_loads}") || test_end 1
 
 reported_cpus=$(echo "${output}" | grep -io 'CPU[[:space:]]*Usage:.*%' | sort | uniq)
-compare --ignore-all-space \
+compare --ignore-all-space --ignore-case \
     <(echo "${expected_cpus}") <(echo "${reported_cpus}") || test_end 1
 
 reported_mems=$(echo "${output}" | grep -io 'Memory Usage:.*%[[:space:]]*(.*/.*[[:space:]]*..)\s' | sort | uniq)
-compare --ignore-all-space \
+compare --ignore-all-space --ignore-case \
     <(echo "${expected_mems}") <(echo "${reported_mems}") || test_end 1
 
 test_end 0
