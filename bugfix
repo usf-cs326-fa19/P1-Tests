@@ -1,0 +1,2 @@
+- No check for both relative path + absolute path (all tests assume absolute)
+- Check entire process list, not just specfic corner cases (thwarts hard-coding)
