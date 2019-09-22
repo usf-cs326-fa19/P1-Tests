@@ -54,7 +54,7 @@ reported_cpus=$(echo "${output}" | grep -io 'CPU[[:space:]]*Usage:.*%' | sort | 
 compare --ignore-all-space --ignore-case \
     <(echo "${expected_cpus}") <(echo "${reported_cpus}") || test_end 1
 
-reported_mems=$(echo "${output}" | grep -io 'Memory[[:space:]]*Usage:.*' | sort | uniq)
+reported_mems=$(echo "${output}" | grep -io 'Memory[[:space:]]*Usage:.*% (.*/.*B)' | sort | uniq)
 compare --ignore-all-space --ignore-case \
     <(echo "${expected_mems}") <(echo "${reported_mems}") || test_end 1
 
