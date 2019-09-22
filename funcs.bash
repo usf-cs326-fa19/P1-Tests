@@ -5,6 +5,8 @@ test_pts="${test_pts/.sh/}"
 test_name="${test_file_name%-*}"
 test_name="${test_name##*-}"
 in_test=false
+program_output=""
+filtered_output=""
 
 exec &> "${TEST_DIR}/test.${test_num}.md"
 
@@ -32,9 +34,18 @@ test_end() {
     fi
 
     if [[ "${return}" -eq 139 ]]; then
-        echo '--------------------------------------'
-        echo 'ERROR: program terminated with SIGSEGV'
-        echo '--------------------------------------'
+        echo '--------------------------------------------'
+        echo ' --> ERROR: program terminated with SIGSEGV '
+        echo '--------------------------------------------'
+        echo
+    fi
+
+    if [[ ${return} -ne 0 ]]; then
+        if [[ -n "${program_output}" ]]; then
+            echo ' --> Test failed, printing last full program output:'
+            echo
+            echo "${program_output}"
+        fi
     fi
 
     { trace_off; } 2> /dev/null
@@ -49,6 +60,26 @@ trace_on() {
 
 trace_off() {
     { set +v; } 2> /dev/null
+}
+
+run() {
+    program_output=$(${@})
+    program_return=$?
+
+    if [[ "${program_return}" -eq 139 ]]; then
+        test_end 139
+    fi
+
+    return $?
+}
+
+filter() {
+    filtered_output=$(grep -iE ${@} <<< "${program_output}")
+    matches=0
+    if [[ -n "${filtered_output}" ]]; then
+        matches=$(wc -l <<< "${filtered_output}") 
+    fi
+    echo " --> Filter matched ${matches} line(s)"
 }
 
 draw_sep() {
@@ -73,12 +104,12 @@ compare() {
     echo
     local term_sz="$(tput cols)"
     local half=$(((term_sz - 1) / 2))
-    printf "%-${half}s| %s\n" "Expected Output" "Actual Output"
+    printf "%-${half}s| %s\n" "Expected Program Output" "Actual Program Output"
     draw_sep 'V'
     sdiff --expand-tabs --width="${term_sz}" ${@}
     local result=${?}
     draw_sep '^'
-    echo -n "  --> "
+    echo -n " --> "
     if [[ ${result} -eq 0 ]]; then
         echo "OK"
     else

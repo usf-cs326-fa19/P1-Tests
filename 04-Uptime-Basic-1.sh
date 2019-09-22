@@ -1,10 +1,14 @@
 source "${TEST_DIR}/funcs.bash"
 
+expected_uptime="Uptime: 17 days, 5 hours, 38 minutes, 55 seconds"
+
 test_start "Basic Uptime Formatting"
 
-expected_uptime="Uptime: 17 days, 5 hours, 38 minutes, 55 seconds"
-reported_uptime=$(./inspector -p "${TEST_DIR}/fakeproc" -s | grep -i 'Uptime')
+run ./inspector -p "${TEST_DIR}/fakeproc" -s
+
+filter 'Uptime'
+
 compare --ignore-all-space --ignore-case \
-    <(echo "${expected_uptime}") <(echo "${reported_uptime}") || test_end 1
+    <(echo "${expected_uptime}") <(echo "${filtered_output}") || test_end
 
 test_end
