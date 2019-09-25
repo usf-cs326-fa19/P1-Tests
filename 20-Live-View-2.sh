@@ -46,7 +46,7 @@ LD_PRELOAD="${TEST_DIR}/virtualproc/virtualproc.so" \
     timeout 1 ./inspector -l 2> /dev/null)
 
 reported_loads=$(echo "${output}" | \
-    grep -io 'Load[[:space:]]*Average[[:space:]]*(1/5/15 min):[[:space:]]*\([0-9.]*\)[[:space:]]*\([0-9.]*\)[[:space:]]*\([0-9.]*\)' | sort | uniq)
+    grep -io 'Load[[:space:]]*Average[[:space:]]*(1/5/15 min):[[:space:]]*\([0-9.]*[0-9]\)[[:space:]]*\([0-9.]*[0-9]\)[[:space:]]*\([0-9.]*[0-9]\)' | sort | uniq)
 compare --ignore-all-space --ignore-case \
     <(echo "${expected_loads}") <(echo "${reported_loads}") || test_end 1
 
